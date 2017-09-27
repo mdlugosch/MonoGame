@@ -44,19 +44,29 @@ namespace RetroTennis.Components
         {
             GraphicsDevice.Clear(Color.Black);
 
+            int width = GraphicsDevice.Viewport.Width - 20;
+            int height = GraphicsDevice.Viewport.Height - 20;
+
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             //spriteBatch.Draw(star, game.Simulation.Position, Color.White);
 
             // Draw-Methode vergrößert das pixel zu einem Rechteck.
             // Destination Rectangle übernimmt diese Aufgabe und ersetzt auch eine Positionsangabe in dieser Überladung
-            spriteBatch.Draw(pixel, new Rectangle((int)game.Simulation.Position.X, (int)game.Simulation.Position.Y, 10, 10), Color.White);
+            spriteBatch.Draw(pixel, new Rectangle((int)(game.Simulation.BallPosition.X * width) + 10, 
+                                                  (int)(game.Simulation.BallPosition.Y * height) + 10, 10, 10), Color.White);
 
             // Neben dem Ball muss das Spielfeld Ränder haben die aus den Werten des Spielfensters ermittelt werden
             spriteBatch.Draw(pixel, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, 10), Color.DarkGray);
             spriteBatch.Draw(pixel, new Rectangle(0, GraphicsDevice.Viewport.Height -10, GraphicsDevice.Viewport.Width, 10), Color.DarkGray);
-            spriteBatch.Draw(pixel, new Rectangle(0, 0, 10, GraphicsDevice.Viewport.Height), Color.DarkGray);
             spriteBatch.Draw(pixel, new Rectangle(GraphicsDevice.Viewport.Width - 10, 0, 10, GraphicsDevice.Viewport.Height), Color.DarkGray);
+
+            int playerRadius = (int)(height * game.Simulation.PlayerSize) / 2;
+            int player = (int)(height * game.Simulation.PlayerPosition) - playerRadius + 10;
+            
+
+            // Schläger zeichnen
+            spriteBatch.Draw(pixel, new Rectangle(0, player, 10, playerRadius * 2), Color.DarkGray);
 
             spriteBatch.End();
 
